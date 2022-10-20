@@ -1,0 +1,19 @@
+import { NextFunction, Request, Response } from 'express';
+import productSchema from '../utils/productSchema';
+
+const productValidate = (req: Request, res: Response, next: NextFunction) => {
+  const { body } = req;
+  const { error } = productSchema.validate(body);
+
+  if (error && error.message.includes('required')) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  if (error) {
+    return res.status(422).json({ message: error.message });
+  }
+
+  next();
+};
+
+export default productValidate;
