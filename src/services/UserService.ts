@@ -14,7 +14,19 @@ export default class UserService {
   async createUser(user: IUser): Promise<IToken> {
     const { username, classe, level } = user;
     await this.userModel.createUser(user);
-    const token = await generateToken({ username, classe, level });
+    const token = generateToken({ username, classe, level });
+    return { token };
+  }
+
+  async getAllUsersByNameAndPassword(login: IUser) {
+    const user = await this.userModel.getAllUsersByNameAndPassword(login);
+    console.log(user);    
+
+    if (!user) {
+      return null;
+    }
+
+    const token = generateToken(login as IUser);
     return { token };
   }
 }
