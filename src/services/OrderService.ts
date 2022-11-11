@@ -13,4 +13,10 @@ export default class OrderService {
     const orders = await this.orderModel.getAllOrders();
     return orders;
   }
+
+  async createOrders(id: number): Promise<number> {
+    const createdId = await this.orderModel.createOrders(id);
+
+    return createdId;
+  }
 }
